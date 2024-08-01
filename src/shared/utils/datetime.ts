@@ -13,17 +13,9 @@ export const dstOffset = (
   dateTime: string,
   zone: string = "America/New_York"
 ) => {
-  const currentTime = DateTime.fromISO(dateTime, { zone });
-
-  const isInDst = currentTime.isInDst;
-
-  const currentMonth = currentTime.month
-
-  if (isInDst && (currentMonth >= 3 || currentMonth <=5)) {
-    return 23
-  } else if (isInDst && (currentMonth >= 9 || currentMonth <=11)) {
-    return 25
-  } else {
-    return 24
-  }
+  // const start = DateTime.fromObject({year: 2024, month:11, day: 3}, {zone})
+    const start = DateTime.fromISO(dateTime, { zone });
+    const end = start.plus({ days: 1 });
+    const diff = end.diff(start, 'hours');
+    return diff.as('hours');
 };
